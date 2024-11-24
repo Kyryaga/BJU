@@ -18,7 +18,9 @@
     <div class="header">
       <div class="profile-btn-box">
         <button class="profile-btn">
-          <img src="{% static 'images/account_box.png' %}" alt="" />
+          <a href="{% url 'diary:profile' %}"
+            ><img src="{% static 'images/account_box.png' %}" alt=""
+          /></a>
         </button>
       </div>
       <div class="page-header-box">
@@ -27,12 +29,13 @@
       </div>
       <div class="diary-btn-box">
         <button class="diary-btn">
-          <img src="{% static 'images/diary.png' %}" alt="" />
+          <a href="{% url 'diary:index' %}"
+            ><img src="{% static 'images/diary.png' %}" alt=""
+          /></a>
         </button>
       </div>
     </div>
     Main Page
-    <button><a href="{% url 'diary:profile' %}">Профиль</a></button>
 
     <!-- Форма для выбора даты -->
     <form method="post">
