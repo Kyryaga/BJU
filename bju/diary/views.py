@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from .forms import UserLoginForm
+from .forms import UserLoginForm, UserRegistrationForm
 from django.contrib.auth import authenticate, login as auth_login
 
 
@@ -33,4 +33,13 @@ def login(request):
 
 
 def registration(request):
-    return render(request, 'diary/registration.html')
+    if request.method == 'POST':
+        form = UserRegistrationForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('diary:login')
+    else:
+        form = UserRegistrationForm()
+    context = {'form': form}
+
+    return render(request, 'diary/registration.html', context)
