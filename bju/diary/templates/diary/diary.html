@@ -8,5 +8,23 @@
   <body>
     Main Page
     <button><a href="{% url 'diary:profile' %}">Профиль</a></button>
+
+    <!-- Форма для выбора даты -->
+    <form method="post">
+      {% csrf_token %} {{ form.as_p }}
+      <button type="submit" class="btn btn-primary">Показать</button>
+    </form>
+
+    <!-- Отображение продуктов -->
+    {% if products %}
+    <h2>Продукты на {{ form.data.date }}</h2>
+    <ul>
+      {% for entry in products %}
+      <li>{{ entry.product.name }} - {{ entry.weight }} г</li>
+      {% endfor %}
+    </ul>
+    {% elif message %}
+    <p>{{ message }}</p>
+    {% endif %}
   </body>
 </html>

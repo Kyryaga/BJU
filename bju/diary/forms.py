@@ -27,3 +27,10 @@ class CalorieGoalForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['calorie_goal']
+
+
+class DateForm(forms.Form):
+    date = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        label="Выберите дату"
+    )

@@ -3,13 +3,36 @@ from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from .forms import UserLoginForm, UserRegistrationForm, WeightForm, HeightForm, CalorieGoalForm
+from .forms import UserLoginForm, UserRegistrationForm, WeightForm, HeightForm, CalorieGoalForm, DateForm
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from .models import Diary
 
 
 @login_required
 def index(request):
-    return render(request, 'diary/diary.html')
+    products = None
+    message = None
+    if request.method == 'POST':
+        form = DateForm(request.POST)
+        if form.is_valid():
+            # Получаем дату из формы
+            date = form.cleaned_data['date']
+            
+            # Проверяем, есть ли дневник на указанную дату
+            try:
+                diary = Diary.objects.get(user=request.user, date=date)
+                products = diary.product_entries.all()  # Получаем все записи продуктов из дневника
+            except Diary.DoesNotExist:
+                message = "На эту дату продуктов нет."
+    else:
+        form = DateForm()
+
+    context = {
+        'form': form,
+        'products': products,
+        'message': message,
+    }
+    return render(request, 'diary/diary.html', context)
 
 
 def login(request):
