@@ -3,8 +3,7 @@ from django.contrib.auth.models import AbstractUser
 
 
 # user model
-class User(AbstractUser):
-    email = models.EmailField(unique=True)  
+class User(AbstractUser):  
     weight = models.FloatField(null=True, blank=True) 
     height = models.FloatField(null=True, blank=True)
     calorie_goal = models.IntegerField(null=True, blank=True)
