@@ -1,6 +1,7 @@
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from .models import User
 from django import forms
+import datetime
 
 class UserLoginForm(AuthenticationForm):
     class Meta:
@@ -35,5 +36,6 @@ class DateForm(forms.Form):
                                       'name': 'date',
                                       'class': 'date-picker',
                                       }),
-        label="Выберите дату"
+        label="Выберите день",
+        initial=datetime.date.today
     )

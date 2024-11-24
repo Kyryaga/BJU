@@ -23,7 +23,7 @@ def index(request):
                 diary = Diary.objects.get(user=request.user, date=date)
                 products = diary.product_entries.all()  # Получаем все записи продуктов из дневника
             except Diary.DoesNotExist:
-                message = "На эту дату продуктов нет."
+                message = "Дневник пуст! Добавьте продукты кнопкой +"
     else:
         form = DateForm()
 

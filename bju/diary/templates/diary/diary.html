@@ -52,25 +52,44 @@
           <!-- Форма для выбора даты -->
           <form method="post" class="date-form">
             {% csrf_token %}
-            <label for="id_date" class="form-label">Выберите дату:</label>
+            <label for="id_date" class="form-label">Выберите день:</label>
             {{ form.date }}
             <button type="submit" class="btn-submit">Показать</button>
           </form>
         </div>
+
+        <div class="bju-calculatings-block"></div>
+
+        <div class="products-print-block">
+          <div class="add-product-container">+</div>
+          <!-- Отображение продуктов -->
+          {% if products %} {% for entry in products %}
+          <div class="day-products-container">
+            <div class="product-title-row">
+              <div class="product-title">{{ entry.product.name }}</div>
+              <div class="product-colories">{{ entry.product.calories }}</div>
+            </div>
+            <div class="product-weight-row">
+              <div class="product-weight">{{ entry.weight }}г</div>
+              <div class="product-edit-btn">
+                <button>
+                  <img src="{% static 'images/edit_product.png' %}" alt="" />
+                </button>
+              </div>
+            </div>
+            <div class="product-bju-row">
+              <div class="product-fats">{{ entry.product.fats }}</div>
+              <div class="product-carbos">{{ entry.product.carbos }}</div>
+              <div class="product-prots">{{ entry.product.prots }}</div>
+              <div class="product-rsk">7%</div>
+            </div>
+          </div>
+          {% endfor %} {% elif message %}
+          <div class="empty-day-msg-block">{{ message }}</div>
+          {% endif %}
+        </div>
       </div>
     </div>
-
-    <!-- Отображение продуктов -->
-    {% if products %}
-    <h2>Продукты на {{ form.data.date }}</h2>
-    <ul>
-      {% for entry in products %}
-      <li>{{ entry.product.name }} - {{ entry.weight }} г</li>
-      {% endfor %}
-    </ul>
-    {% elif message %}
-    <p>{{ message }}</p>
-    {% endif %}
   </body>
 
   <script>

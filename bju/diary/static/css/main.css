@@ -5,12 +5,13 @@
 }
 
 .main-inner {
-  background-color: lightblue;
   width: 600px;
-  height: 500px;
+  height: 650px;
 
   display: flex;
-  justify-content: center;
+
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Контейнер для формы */
@@ -35,6 +36,7 @@
 /* Метка для поля даты */
 .form-label {
   font-size: 16px;
+  color: gray;
   margin-bottom: 10px;
   color: #333;
 }
@@ -95,4 +97,127 @@
 
 .flatpickr-day:hover {
   background-color: #e0e0e0;
+}
+
+.products-print-block {
+  width: 100%;
+  margin-top: 30px;
+  background-color: white;
+  height: 100%;
+
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  padding-top: 15px;
+}
+
+.add-product-container {
+  width: 80%;
+  height: 30px;
+  text-align: end;
+
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: rgb(208, 208, 208);
+
+  padding-right: 40px;
+}
+
+.empty-day-msg-block {
+  width: 80%;
+  height: 70px;
+
+  text-align: center;
+  margin-top: 30px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: rgb(208, 208, 208);
+
+  padding-top: 20px;
+}
+
+.day-products-container {
+  width: 73%;
+  height: 70px;
+
+  padding-top: 10px;
+
+  padding-left: 40px;
+  padding-right: 40px;
+
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: rgb(208, 208, 208);
+
+  cursor: pointer;
+}
+
+.day-products-container:hover {
+  opacity: 0.6;
+  background-color: rgb(241, 241, 241);
+}
+
+.day-products-container:hover .product-edit-btn button {
+  background-color: rgb(241, 241, 241);
+}
+
+.product-title-row {
+  display: flex;
+}
+
+.product-title {
+  width: 90%;
+
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.product-colories {
+  width: 10%;
+
+  font-size: 16px;
+  color: gray;
+  font-weight: 500;
+}
+
+.product-weight-row {
+  display: flex;
+  margin-top: 5px;
+  margin-left: 6px;
+}
+
+.product-weight {
+  width: 90%;
+
+  font-size: 13px;
+  color: rgb(73, 158, 99);
+}
+
+.product-edit-btn {
+  width: 10%;
+  text-align: end;
+}
+
+.product-edit-btn button {
+  background-color: white;
+  border: none;
+  padding: 0;
+}
+
+.product-bju-row {
+  display: flex;
+  width: 60%;
+
+  margin-left: 2px;
+
+  justify-content: space-between;
+}
+
+.product-bju-row div {
+  font-size: 13px;
+  color: gray;
 }
