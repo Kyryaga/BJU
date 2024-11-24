@@ -31,6 +31,9 @@ class CalorieGoalForm(forms.ModelForm):
 
 class DateForm(forms.Form):
     date = forms.DateField(
-        widget=forms.DateInput(attrs={'type': 'date'}),
+        widget=forms.DateInput(attrs={'id': 'datePicker',
+                                      'name': 'date',
+                                      'class': 'date-picker',
+                                      }),
         label="Выберите дату"
     )
