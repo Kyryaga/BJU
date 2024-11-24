@@ -10,5 +10,9 @@
       {% csrf_token %} {{ form.as_p }}
       <input type="submit" value="Send" />
     </form>
+    <p>
+      Нет аккаунта?
+      <a href="{% url 'diary:registration' %}">Зарегистрироваться</a>
+    </p>
   </body>
 </html>

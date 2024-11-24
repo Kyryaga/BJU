@@ -30,3 +30,7 @@ def login(request):
 
     context = {'form': form}
     return render(request, 'diary/login.html', context)
+
+
+def registration(request):
+    return render(request, 'diary/registration.html')
