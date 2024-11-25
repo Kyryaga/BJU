@@ -63,23 +63,26 @@
     </div>
 
     <div class="main">
-      <div>
-        <!-- Форма для изменения веса -->
-        <form method="post" action="">
-          {% csrf_token %}{{ weight_form.weight }}
-          <button type="submit" name="update_weight">Изменить</button>
-        </form>
+      <div class="profile-forms-container">
+        <form method="post" class="profile-form">
+          {% csrf_token %}
 
-        <!-- Форма для изменения роста -->
-        <form method="post" action="">
-          {% csrf_token %} {{ height_form.as_p }}
-          <button type="submit" name="update_height">Изменить</button>
-        </form>
+          <div class="profile-form-group">
+            <label for="id_weight">Ваш вес:</label>
+            {{ profile_form.weight }}
+          </div>
 
-        <!-- Форма для изменения цели по калориям -->
-        <form method="post" action="">
-          {% csrf_token %} {{ calorie_goal_form.as_p }}
-          <button type="submit" name="update_calorie_goal">Изменить</button>
+          <div class="profile-form-group">
+            <label for="id_height">Ваш рост:</label>
+            {{ profile_form.height }}
+          </div>
+
+          <div class="profile-form-group">
+            <label for="id_calorie_goal">Цель по ккал:</label>
+            {{ profile_form.calorie_goal }}
+          </div>
+
+          <button type="submit" class="profile-save-btn">Сохранить</button>
         </form>
       </div>
     </div>

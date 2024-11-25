@@ -13,21 +13,15 @@ class UserRegistrationForm(UserCreationForm):
         model = User 
         fields = ('username', 'first_name', 'email', 'password1', 'password2', 'weight', 'height', 'calorie_goal')
 
-# FOR PROFILE
-class WeightForm(forms.ModelForm):
+class UserProfileForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['weight']
-
-class HeightForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ['height']
-
-class CalorieGoalForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ['calorie_goal']
+        fields = ['weight', 'height', 'calorie_goal']
+        widgets = {
+            'weight': forms.NumberInput(attrs={'class': 'form-control', 'min': 1}),
+            'height': forms.NumberInput(attrs={'class': 'form-control', 'min': 1}),
+            'calorie_goal': forms.NumberInput(attrs={'class': 'form-control', 'min': 1}),
+        }
 
 
 class DateForm(forms.Form):
