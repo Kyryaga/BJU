@@ -7,7 +7,7 @@ from .forms import UserLoginForm, UserRegistrationForm, WeightForm, HeightForm, 
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from .models import Diary
 
-from .utils.calcs import calculate_total_bju
+from .utils.calcs import calculate_total_bju, calculate_each_product_bju
 
 
 @login_required
@@ -27,18 +27,8 @@ def index(request):
                 diary = Diary.objects.get(user=request.user, date=date)
                 products = diary.product_entries.all()  # Получаем все записи продуктов из дневника
 
-                enriched_products = []
-
                 # расчет bju для каждого продукта с учетом веса
-                for entry in products:
-                    enriched_products.append({
-                        'product': entry.product,
-                        'weight': entry.weight,
-                        'calories': entry.product.calories * entry.weight / 100,
-                        'prots': entry.product.prots * entry.weight / 100,
-                        'fats': entry.product.fats * entry.weight / 100,
-                        'carbos': entry.product.carbos * entry.weight / 100,
-                     })
+                enriched_products = calculate_each_product_bju(products)
                     
                 # расчет total bju
                 total_bju = calculate_total_bju(enriched_products)
