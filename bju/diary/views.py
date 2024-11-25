@@ -20,13 +20,18 @@ def index(request):
     total_bju = None
 
     if request.method == 'POST':
-        # Обрабатываем дату из формы
         form = DateForm(request.POST)
         if form.is_valid():
             date_selected = form.cleaned_data['date']
     else:
-        # По умолчанию выбираем сегодняшнюю дату
-        date_selected = date.today()
+        date_selected = request.GET.get('date')
+        if date_selected:
+            try:
+                date_selected = date.fromisoformat(date_selected)
+            except ValueError:
+                date_selected = date.today() 
+        else:
+            date_selected = date.today() 
         form = DateForm(initial={'date': date_selected})
 
     # Проверяем, есть ли дневник на указанную дату
@@ -43,6 +48,7 @@ def index(request):
     except Diary.DoesNotExist:
         message = "Дневник пуст! Добавьте продукты кнопкой +"
 
+    # Отображение даты
     if date_selected == date.today():
         date_display = 'Сегодня'
     else:
@@ -56,6 +62,7 @@ def index(request):
         'date': date_display,
     }
     return render(request, 'diary/diary.html', context)
+
 
 
 def login(request):
@@ -147,11 +154,11 @@ def product_edit(request, entry_id):
     if request.method == 'POST':
         if 'delete' in request.POST:
             entry.delete()
-            return redirect('diary:index')
+            return redirect(f"{reverse('diary:index')}?date={entry.diary.date}")
         elif 'save' in request.POST:
             entry.weight = request.POST.get('weight')
             entry.save()
-            return redirect('diary:index')
+            return redirect(f"{reverse('diary:index')}?date={entry.diary.date}")
 
     if entry.diary.date == date.today():
         display_date = 'Сегодня'
