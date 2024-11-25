@@ -17,7 +17,7 @@
 
 /* Контейнер для формы */
 .week-days-container {
-  width: 80%;
+  width: 70%;
   background-color: white;
   padding: 20px;
   border-radius: 10px;
@@ -102,7 +102,6 @@
 
 .products-print-block {
   width: 100%;
-  margin-top: 30px;
   background-color: white;
   max-height: 600px;
   overflow-y: auto;
@@ -147,7 +146,7 @@
 
   padding-top: 10px;
 
-  padding-left: 40px;
+  padding-left: 65px;
   padding-right: 40px;
 
   border-bottom-style: solid;
@@ -222,7 +221,76 @@
   transform: translateY(-7px);
 }
 
+.product-bju-row .product-fats {
+  transform: translateX(5px);
+}
+
+.product-bju-row .product-rsk {
+  transform: translateX(-12px);
+}
+
+.product-bju-row .product-prots {
+  transform: translateX(-8px);
+}
+
 .product-bju-row div {
   font-size: 13px;
   color: gray;
+}
+
+.bju-calculatings-block {
+  width: 75%;
+  height: 40px;
+
+  padding-left: 38px;
+
+  margin-top: 20px;
+
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: rgb(208, 208, 208);
+
+  display: flex;
+  justify-content: space-between;
+  padding-top: 7px;
+}
+
+.total-carbos-col,
+.total-prots-col,
+.total-rsk-col,
+.goal-col,
+.total-fats-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.total-carbos-title,
+.total-fats-title,
+.total-prots-title,
+.total-rsk-title,
+.goal-title {
+  font-size: 14px;
+  color: gray;
+  margin-bottom: 2px;
+}
+
+.total-carbos,
+.total-prots,
+.total-fats,
+.total-rsk {
+  font-size: 12px;
+  color: rgb(62, 62, 62);
+  text-align: center;
+}
+
+.calories-row {
+  font-size: 14px;
+  color: rgb(73, 73, 73);
+  font-weight: 500;
+
+  align-content: center;
+}
+
+.calories-row span {
+  font-weight: bold;
 }
