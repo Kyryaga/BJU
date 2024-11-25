@@ -1,0 +1,185 @@
+body {
+  display: flex;
+  justify-content: center;
+}
+
+.main {
+  width: 500px;
+  background-color: rgb(255, 255, 255);
+  height: 400px;
+
+  margin-top: 20px;
+
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+}
+
+.edit-title-container {
+  width: 85%;
+
+  margin-top: 20px;
+
+  font-size: 20px;
+  font-weight: bold;
+
+  padding-bottom: 15px;
+
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: rgb(208, 208, 208);
+}
+
+.edit-product-container {
+  width: 85%;
+
+  height: 100%;
+}
+
+.edit-container-text {
+  font-size: 14px;
+}
+
+.weight-input-row {
+  display: flex;
+}
+
+.weight-input-row img {
+  margin-right: 15px;
+
+  scale: 0.85;
+}
+
+.weight-input-row input {
+  width: 250px;
+  border: none;
+  border-radius: 5px;
+  padding-left: 20px;
+
+  font-size: 16px;
+  font-weight: 500;
+
+  background-color: #e8e8e8;
+}
+
+.weight-input:focus {
+  outline: none;
+}
+
+/* убрать стрелочки в конце */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.weight-input-row span {
+  align-content: end;
+  margin-left: 5px;
+
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-buttons {
+  margin-top: 20px;
+  display: flex;
+}
+
+.form-buttons .btn-delete,
+.form-buttons .btn-save {
+  width: 170px;
+  height: 25px;
+  border: none;
+  border-radius: 7px;
+
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.form-buttons .btn-delete:hover,
+.form-buttons .btn-save:hover {
+  opacity: 0.8;
+}
+
+.form-buttons .btn-delete:active,
+.form-buttons .btn-save:active {
+  opacity: 0.5;
+}
+
+.form-buttons .btn-delete {
+  margin-right: 15px;
+  background-color: #f17e40;
+}
+
+.form-buttons .btn-save {
+  margin-right: 15px;
+  background-color: #499e63;
+}
+
+.current-bju-container {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.first-row,
+.second-row {
+  display: flex;
+  justify-content: center;
+}
+
+.first-row div,
+.second-row div {
+  width: 170px;
+  height: 40px;
+
+  background-color: #aaaaaa;
+
+  margin-right: 15px;
+  margin-bottom: 15px;
+}
+
+.calories-block,
+.fats-block,
+.carbos-block,
+.prots-block {
+  display: flex;
+  flex-direction: column;
+
+  padding-top: 7px;
+
+  align-items: center;
+}
+
+.calories-block p,
+.fats-block p,
+.carbos-block p,
+.prots-block p {
+  margin: 0;
+  font-size: 13px;
+  color: #fffcfc;
+}
+
+.calories-block .value,
+.fats-block .value,
+.carbos-block .value,
+.prots-block .value {
+  font-weight: 500;
+  margin-top: 2px;
+}

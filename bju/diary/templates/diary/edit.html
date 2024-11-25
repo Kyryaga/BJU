@@ -7,6 +7,7 @@
     <title>EDIT</title>
     <link rel="stylesheet" href="{% static 'css/general.css' %}" />
     <link rel="stylesheet" href="{% static 'css/header.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/edit_main.css' %}" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -38,35 +39,62 @@
     </div>
 
     <div class="main">
-      <div class="edit-container">
-        <h2>Редактировать в дневнике</h2>
-        <form method="post" class="edit-form">
-          {% csrf_token %}
-          <div class="weight-input-row">
-            <img
-              src="{% static 'images/weight_icon.png' %}"
-              alt="Weight Icon"
-              class="weight-icon"
-            />
-            <input
-              type="number"
-              name="weight"
-              value="{{ entry.weight }}"
-              class="weight-input"
-              min="1"
-              required
-            />
-            <span>, г</span>
+      <div class="edit-title-container">{{ entry.product.name }}</div>
+
+      <div class="edit-product-container">
+        <div class="edit-container">
+          <p class="edit-container-text">Редактировать в дневнике</p>
+          <form method="post" class="edit-form">
+            {% csrf_token %}
+            <div class="weight-input-row">
+              <img
+                src="{% static 'images/weight-logo.png' %}"
+                alt="Weight Icon"
+                class="weight-icon"
+              />
+              <input
+                type="number"
+                name="weight"
+                value="{{ entry.weight }}"
+                class="weight-input"
+                min="1"
+                required
+              />
+              <span>, г</span>
+            </div>
+            <div class="form-buttons">
+              <button type="submit" name="delete" class="btn btn-delete">
+                Удалить
+              </button>
+              <button type="submit" name="save" class="btn btn-save">
+                Сохранить
+              </button>
+            </div>
+          </form>
+
+          <div class="current-bju-container">
+            <div class="first-row">
+              <div class="calories-block">
+                <p class="title">Калории</p>
+                <p class="value">{{ entry.product.calories }}</p>
+              </div>
+              <div class="fats-block">
+                <p class="title">Жиры</p>
+                <p class="value">{{ entry.product.fats }}г</p>
+              </div>
+            </div>
+            <div class="second-row">
+              <div class="carbos-block">
+                <p class="title">Углев</p>
+                <p class="value">{{ entry.product.carbos }}г</p>
+              </div>
+              <div class="prots-block">
+                <p class="title">Белок</p>
+                <p class="value">{{ entry.product.prots }}г</p>
+              </div>
+            </div>
           </div>
-          <div class="form-buttons">
-            <button type="submit" name="delete" class="btn btn-delete">
-              Удалить
-            </button>
-            <button type="submit" name="save" class="btn btn-save">
-              Сохранить
-            </button>
-          </div>
-        </form>
+        </div>
       </div>
     </div>
   </body>
