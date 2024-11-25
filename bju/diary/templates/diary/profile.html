@@ -56,9 +56,9 @@
         </button>
       </div>
       <div class="user-info-col">
-        <p>Eugene</p>
-        <p>money230704@gmail.com</p>
-        <p>20 лет</p>
+        <p>{{ username }}</p>
+        <p>{{ email }}</p>
+        <p>{{ age }} лет</p>
       </div>
     </div>
 
@@ -82,8 +82,31 @@
             {{ profile_form.calorie_goal }}
           </div>
 
+          <div class="profile-form-group">
+            <label for="id_age">Ваш возраст:</label>
+            {{ profile_form.age }}
+          </div>
+
           <button type="submit" class="profile-save-btn">Сохранить</button>
         </form>
+      </div>
+
+      <div class="other-container">
+        <div class="stat-first-row">
+          <div class="stat-days-pass">Заполнено дней: 30</div>
+          <div class="stat-goal-pass">Цель достигнута: 30</div>
+        </div>
+        <div class="stat-second-row">
+          <div class="avg-cal">Среднее значение ккал в день: 2942</div>
+          <a href="#">
+            <div class="export">
+              <div class="export-img">
+                <img src="{% static 'images/export.png' %}" alt="" />
+              </div>
+              <div class="export-alt">Export</div>
+            </div>
+          </a>
+        </div>
       </div>
     </div>
   </body>

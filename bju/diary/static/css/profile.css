@@ -54,8 +54,8 @@ body {
 }
 
 .main {
-  width: 500px;
-  height: 400px;
+  width: 460px;
+  height: 600px;
   background-color: white;
 
   border-radius: 10px;
@@ -63,4 +63,149 @@ body {
   margin-top: 20px;
 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Общий контейнер формы */
+.profile-forms-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Группа полей формы */
+.profile-form-group {
+  margin-bottom: 20px;
+}
+
+/* Метки (label) */
+.profile-form-group label {
+  font-size: 16px;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+}
+
+/* Поля ввода */
+.profile-form-group input {
+  width: 95%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Кнопка "Сохранить" */
+.profile-save-btn {
+  display: block;
+  width: 100%;
+  padding: 10px 20px;
+  background-color: rgb(73, 158, 99);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover-эффект на кнопке */
+.profile-save-btn:hover {
+  background-color: #61ac82;
+  box-shadow: 0 6px 12px rgba(0, 123, 255, 0.5);
+}
+
+.other-container {
+  width: 85%;
+  margin-top: 10px;
+
+  align-content: center;
+
+  height: 150px;
+}
+
+.stat-first-row {
+  display: flex;
+  margin-bottom: 10px;
+
+  justify-content: space-between;
+}
+
+.stat-second-row {
+  display: flex;
+
+  justify-content: space-between;
+}
+
+.stat-second-row a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.stat-days-pass,
+.stat-goal-pass,
+.avg-cal {
+  background-color: #f17e40;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+
+  color: white;
+  font-size: 15px;
+}
+
+.avg-cal {
+  font-size: 13px;
+  width: 139px;
+}
+
+.export {
+  align-content: center;
+
+  transform: translatex(-50px);
+}
+
+.export {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background-color: rgb(238, 238, 238);
+
+  padding: 5px 15px;
+
+  border-radius: 10px;
+
+  transition: all 0.3s ease;
+}
+
+.export:hover {
+  opacity: 0.7;
+}
+
+.export:active {
+  opacity: 0.5;
+}
+
+.export-img img {
+  scale: 0.9;
+}
+
+.export-alt {
+  margin-top: -7px;
+  font-size: 17px;
+  font-weight: 500;
+  color: gray;
 }

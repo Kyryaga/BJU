@@ -7,6 +7,7 @@ class User(AbstractUser):
     weight = models.FloatField() 
     height = models.FloatField()
     calorie_goal = models.IntegerField(null=True, blank=True)
+    age = models.IntegerField()
 
     def __str__(self):
         return self.username

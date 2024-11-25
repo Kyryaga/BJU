@@ -70,13 +70,6 @@ body {
   outline: none;
 }
 
-/* убрать стрелочки в конце */
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
 .weight-input-row span {
   align-content: end;
   margin-left: 5px;

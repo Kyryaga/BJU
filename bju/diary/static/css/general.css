@@ -5,3 +5,10 @@ body {
 
   background-color: rgb(239, 239, 239);
 }
+
+/* убрать стрелочки в конце */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

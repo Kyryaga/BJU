@@ -114,6 +114,8 @@ def profile(request):
     context = {
         'profile_form': profile_form,
         'username': request.user.username,
+        'email': request.user.email,
+        'age': request.user.age,
     }
     return render(request, 'diary/profile.html', context)
 
