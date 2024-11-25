@@ -89,7 +89,10 @@
           <div class="add-product-container">+</div>
           <!-- Отображение продуктов -->
           {% if products %} {% for entry in products %}
-          <div class="day-products-container">
+          <a
+            href="{% url 'diary:product_edit' entry.entry_id %}"
+            class="day-products-container"
+          >
             <div class="product-title-row">
               <div class="product-title">{{ entry.product.name }}</div>
               <div class="product-colories">
@@ -110,7 +113,7 @@
               <div class="product-prots">{{ entry.prots|floatformat:2 }}</div>
               <div class="product-rsk">x%</div>
             </div>
-          </div>
+          </a>
           {% endfor %} {% elif message %}
           <div class="empty-day-msg-block">{{ message }}</div>
           {% endif %}

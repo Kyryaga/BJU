@@ -1,11 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from .forms import UserLoginForm, UserRegistrationForm, WeightForm, HeightForm, CalorieGoalForm, DateForm
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
-from .models import Diary
+from .models import Diary, ProductsDiaries
 
 from .utils.calcs import calculate_total_bju, calculate_each_product_bju
 
@@ -127,3 +127,11 @@ def profile(request):
 def logout(request):
     auth_logout(request)
     return HttpResponseRedirect(reverse('diary:index'))
+
+
+@login_required
+def product_edit(request, entry_id):
+    # Получаем запись продукта
+    entry = get_object_or_404(ProductsDiaries, id=entry_id)
+
+    return HttpResponse(f'<h1>Редактирование продукта {entry.product.name}({entry.weight}г) дня {entry.diary.date} пользователя {entry.diary.user}</h1>')

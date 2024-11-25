@@ -19,6 +19,7 @@ def calculate_each_product_bju(products):
 
     for entry in products:
         enriched_products.append({
+            'entry_id': entry.id,
             'product': entry.product,
             'weight': entry.weight,
             'calories': entry.product.calories * entry.weight / 100,
