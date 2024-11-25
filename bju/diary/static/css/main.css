@@ -128,7 +128,7 @@
   border-bottom-width: 1px;
   border-bottom-color: rgb(208, 208, 208);
 
-  padding-right: 40px;
+  padding-right: 15px;
 }
 
 .empty-day-msg-block {
@@ -136,10 +136,7 @@
   height: 70px;
 
   text-align: center;
-  margin-top: 30px;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: rgb(208, 208, 208);
+  margin-top: 20px;
 
   padding-top: 20px;
 }
@@ -204,6 +201,8 @@
 .product-edit-btn {
   width: 10%;
   text-align: end;
+
+  transform: translateX(20px);
 }
 
 .product-edit-btn button {
@@ -219,6 +218,8 @@
   margin-left: 2px;
 
   justify-content: space-between;
+
+  transform: translateY(-7px);
 }
 
 .product-bju-row div {
