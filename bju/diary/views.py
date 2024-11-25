@@ -153,5 +153,12 @@ def product_edit(request, entry_id):
             entry.save()
             return redirect('diary:index')
 
-    context = {'entry': entry}
+    if entry.diary.date == date.today():
+        display_date = 'Сегодня'
+    else:
+        display_date = format_date(entry.diary.date, format="d MMMM yyyy", locale="ru")
+
+    context = {'entry': entry,
+               'date': display_date,
+               }
     return render(request, 'diary/edit.html', context)
