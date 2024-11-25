@@ -1,31 +1,87 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PROFILE</title>
+    <title>Diary</title>
+    <link rel="stylesheet" href="{% static 'css/general.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/header.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Flatpickr CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    />
+
+    <!-- Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   </head>
   <body>
-    <h2>Профиль юзера: {{ username }}</h2>
-    <button><a href="{% url 'diary:logout' %}">Log out</a></button>
-    <div>
-      <!-- Форма для изменения веса -->
-      <form method="post" action="" style="display: inline-block">
-        {% csrf_token %}{{ weight_form.as_p }}
-        <button type="submit" name="update_weight">Изменить</button>
-      </form>
+    <div class="header">
+      <div class="profile-btn-box">
+        <button class="profile-btn">
+          <a href="{% url 'diary:profile' %}"
+            ><img src="{% static 'images/account_box.png' %}" alt=""
+          /></a>
+        </button>
+      </div>
+      <div class="page-header-box">
+        <div class="page-header-title">Профиль</div>
+        <div class="page-header-subtitle">{{ username }}</div>
+      </div>
+      <div class="diary-btn-box">
+        <button class="diary-btn">
+          <a href="{% url 'diary:index' %}"
+            ><img src="{% static 'images/diary.png' %}" alt=""
+          /></a>
+        </button>
+      </div>
+    </div>
 
-      <!-- Форма для изменения роста -->
-      <form method="post" action="" style="display: inline-block">
-        {% csrf_token %} {{ height_form.as_p }}
-        <button type="submit" name="update_height">Изменить</button>
-      </form>
+    <div class="premain">
+      <div class="logout-btn-col">
+        <button class="logout-btn">
+          <a href="{% url 'diary:logout' %}"
+            ><img src="{% static 'images/logout.png' %}" alt=""
+          /></a>
+        </button>
+      </div>
+      <div class="user-info-col">
+        <p>Eugene</p>
+        <p>money230704@gmail.com</p>
+        <p>20 лет</p>
+      </div>
+    </div>
 
-      <!-- Форма для изменения цели по калориям -->
-      <form method="post" action="" style="display: inline-block">
-        {% csrf_token %} {{ calorie_goal_form.as_p }}
-        <button type="submit" name="update_calorie_goal">Изменить</button>
-      </form>
+    <div class="main">
+      <div>
+        <!-- Форма для изменения веса -->
+        <form method="post" action="">
+          {% csrf_token %}{{ weight_form.weight }}
+          <button type="submit" name="update_weight">Изменить</button>
+        </form>
+
+        <!-- Форма для изменения роста -->
+        <form method="post" action="">
+          {% csrf_token %} {{ height_form.as_p }}
+          <button type="submit" name="update_height">Изменить</button>
+        </form>
+
+        <!-- Форма для изменения цели по калориям -->
+        <form method="post" action="">
+          {% csrf_token %} {{ calorie_goal_form.as_p }}
+          <button type="submit" name="update_calorie_goal">Изменить</button>
+        </form>
+      </div>
     </div>
   </body>
 </html>
