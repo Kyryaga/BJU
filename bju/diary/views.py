@@ -23,6 +23,7 @@ def index(request):
         form = DateForm(request.POST)
         if form.is_valid():
             date_selected = form.cleaned_data['date']
+            # обновление параметра date после каждого переключения
             return redirect(f"{reverse('diary:index')}?date={date_selected}")
     else:
         date_selected = request.GET.get('date')

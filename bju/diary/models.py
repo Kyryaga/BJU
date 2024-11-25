@@ -4,8 +4,8 @@ from django.contrib.auth.models import AbstractUser
 
 # user model
 class User(AbstractUser):  
-    weight = models.FloatField(null=True, blank=True) 
-    height = models.FloatField(null=True, blank=True)
+    weight = models.FloatField() 
+    height = models.FloatField()
     calorie_goal = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
