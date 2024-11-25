@@ -25,6 +25,7 @@ def index(request):
 
                 enriched_products = []
 
+                # расчет bju для каждого продукта с учетом веса
                 for entry in products:
                     enriched_products.append({
                         'product': entry.product,
@@ -35,6 +36,20 @@ def index(request):
                         'carbos': entry.product.carbos * entry.weight / 100,
                      })
                     
+                # расчет total bju
+                total_bju = {
+                    'fats': 0,
+                    'carbos': 0,
+                    'prots': 0,
+                    'calories': 0,
+                }
+
+                for entry in enriched_products:
+                    total_bju['fats'] += entry['fats']
+                    total_bju['carbos'] += entry['carbos']
+                    total_bju['prots'] += entry['prots']
+                    total_bju['calories'] += entry['calories']
+                    
             except Diary.DoesNotExist:
                 message = "Дневник пуст! Добавьте продукты кнопкой +"
     else:
@@ -44,6 +59,7 @@ def index(request):
         'form': form,
         'products': enriched_products,
         'message': message,
+        'total_bju': total_bju,
     }
     return render(request, 'diary/diary.html', context)
 
