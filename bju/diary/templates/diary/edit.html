@@ -97,5 +97,53 @@
         </div>
       </div>
     </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Исходные значения БЖУ для 100 г
+        const baseBJU = {
+          calories: parseFloat("{{ entry.product.calories }}"), // Калории
+          fats: parseFloat("{{ entry.product.fats }}"), // Жиры
+          carbos: parseFloat("{{ entry.product.carbos }}"), // Углеводы
+          prots: parseFloat("{{ entry.product.prots }}"), // Белки
+        };
+
+        // Элементы для ввода веса и отображения БЖУ
+        const weightInput = document.querySelector('input[name="weight"]');
+        const caloriesBlock = document.querySelector(".calories-block .value");
+        const fatsBlock = document.querySelector(".fats-block .value");
+        const carbosBlock = document.querySelector(".carbos-block .value");
+        const protsBlock = document.querySelector(".prots-block .value");
+
+        // Функция обновления БЖУ
+        function updateBJU(weight) {
+          const factor = weight / 100; // Расчёт коэффициента для веса
+
+          // Пересчитываем значения БЖУ
+          const updatedBJU = {
+            calories: (baseBJU.calories * factor).toFixed(0),
+            fats: (baseBJU.fats * factor).toFixed(1),
+            carbos: (baseBJU.carbos * factor).toFixed(1),
+            prots: (baseBJU.prots * factor).toFixed(1),
+          };
+
+          // Обновляем значения в DOM
+          caloriesBlock.textContent = `${updatedBJU.calories}`;
+          fatsBlock.textContent = `${updatedBJU.fats}г`;
+          carbosBlock.textContent = `${updatedBJU.carbos}г`;
+          protsBlock.textContent = `${updatedBJU.prots}г`;
+        }
+
+        // Добавляем обработчик события на поле ввода веса
+        weightInput.addEventListener("input", function () {
+          const weight = parseFloat(weightInput.value) || 0; // Получаем вес или 0, если поле пустое
+          updateBJU(weight);
+        });
+
+        // Инициализация значений при загрузке
+        const initialWeight = parseFloat(weightInput.value) || 0;
+        updateBJU(initialWeight);
+      });
+    </script>
   </body>
 </html>
