@@ -73,7 +73,7 @@
           </div>
           <div class="total-rsk-col">
             <div class="total-rsk-title">РСК</div>
-            <div class="total-rsk">35%</div>
+            <div class="total-rsk">xx%</div>
           </div>
           <div class="goal-col">
             <div class="goal-title">Цель:</div>
@@ -88,7 +88,9 @@
           <div class="day-products-container">
             <div class="product-title-row">
               <div class="product-title">{{ entry.product.name }}</div>
-              <div class="product-colories">{{ entry.product.calories }}</div>
+              <div class="product-colories">
+                {{ entry.calories|floatformat:0 }}
+              </div>
             </div>
             <div class="product-weight-row">
               <div class="product-weight">{{ entry.weight }}г</div>
@@ -99,10 +101,10 @@
               </div>
             </div>
             <div class="product-bju-row">
-              <div class="product-fats">{{ entry.product.fats }}</div>
-              <div class="product-carbos">{{ entry.product.carbos }}</div>
-              <div class="product-prots">{{ entry.product.prots }}</div>
-              <div class="product-rsk">7%</div>
+              <div class="product-fats">{{ entry.fats|floatformat:2 }}</div>
+              <div class="product-carbos">{{ entry.carbos|floatformat:2 }}</div>
+              <div class="product-prots">{{ entry.prots|floatformat:2 }}</div>
+              <div class="product-rsk">x%</div>
             </div>
           </div>
           {% endfor %} {% elif message %}

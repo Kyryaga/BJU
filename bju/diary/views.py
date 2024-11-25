@@ -22,6 +22,19 @@ def index(request):
             try:
                 diary = Diary.objects.get(user=request.user, date=date)
                 products = diary.product_entries.all()  # Получаем все записи продуктов из дневника
+
+                enriched_products = []
+
+                for entry in products:
+                    enriched_products.append({
+                        'product': entry.product,
+                        'weight': entry.weight,
+                        'calories': entry.product.calories * entry.weight / 100,
+                        'prots': entry.product.prots * entry.weight / 100,
+                        'fats': entry.product.fats * entry.weight / 100,
+                        'carbos': entry.product.carbos * entry.weight / 100,
+                     })
+                    
             except Diary.DoesNotExist:
                 message = "Дневник пуст! Добавьте продукты кнопкой +"
     else:
@@ -29,7 +42,7 @@ def index(request):
 
     context = {
         'form': form,
-        'products': products,
+        'products': enriched_products,
         'message': message,
     }
     return render(request, 'diary/diary.html', context)
