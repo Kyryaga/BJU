@@ -8,6 +8,8 @@ from django.contrib.auth import authenticate, login as auth_login, logout as aut
 from .models import Diary, ProductsDiaries
 
 from .utils.calcs import calculate_total_bju, calculate_each_product_bju
+from datetime import date
+from babel.dates import format_date
 
 
 @login_required
@@ -16,33 +18,42 @@ def index(request):
     message = None
     enriched_products = None
     total_bju = None
+
     if request.method == 'POST':
+        # Обрабатываем дату из формы
         form = DateForm(request.POST)
         if form.is_valid():
-            # Получаем дату из формы
-            date = form.cleaned_data['date']
-            
-            # Проверяем, есть ли дневник на указанную дату
-            try:
-                diary = Diary.objects.get(user=request.user, date=date)
-                products = diary.product_entries.all()  # Получаем все записи продуктов из дневника
-
-                # расчет bju для каждого продукта с учетом веса
-                enriched_products = calculate_each_product_bju(products)
-                    
-                # расчет total bju
-                total_bju = calculate_total_bju(enriched_products)
-                    
-            except Diary.DoesNotExist:
-                message = "Дневник пуст! Добавьте продукты кнопкой +"
+            date_selected = form.cleaned_data['date']
     else:
-        form = DateForm()
+        # По умолчанию выбираем сегодняшнюю дату
+        date_selected = date.today()
+        form = DateForm(initial={'date': date_selected})
+
+    # Проверяем, есть ли дневник на указанную дату
+    try:
+        diary = Diary.objects.get(user=request.user, date=date_selected)
+        products = diary.product_entries.all()  # Получаем все записи продуктов из дневника
+
+        # расчет bju для каждого продукта с учетом веса
+        enriched_products = calculate_each_product_bju(products)
+
+        # расчет total bju
+        total_bju = calculate_total_bju(enriched_products)
+
+    except Diary.DoesNotExist:
+        message = "Дневник пуст! Добавьте продукты кнопкой +"
+
+    if date_selected == date.today():
+        date_display = 'Сегодня'
+    else:
+        date_display = format_date(date_selected, format="d MMMM yyyy", locale="ru")
 
     context = {
         'form': form,
         'products': enriched_products,
         'message': message,
         'total_bju': total_bju,
+        'date': date_display,
     }
     return render(request, 'diary/diary.html', context)
 
@@ -131,7 +142,16 @@ def logout(request):
 
 @login_required
 def product_edit(request, entry_id):
-    # Получаем запись продукта
     entry = get_object_or_404(ProductsDiaries, id=entry_id)
 
-    return HttpResponse(f'<h1>Редактирование продукта {entry.product.name}({entry.weight}г) дня {entry.diary.date} пользователя {entry.diary.user}</h1>')
+    if request.method == 'POST':
+        if 'delete' in request.POST:
+            entry.delete()
+            return redirect('diary:index')
+        elif 'save' in request.POST:
+            entry.weight = request.POST.get('weight')
+            entry.save()
+            return redirect('diary:index')
+
+    context = {'entry': entry}
+    return render(request, 'diary/edit.html', context)

@@ -39,3 +39,5 @@ class DateForm(forms.Form):
         label="Выберите день",
         initial=datetime.date.today
     )
+
+
