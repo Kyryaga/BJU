@@ -7,11 +7,15 @@ from .forms import UserLoginForm, UserRegistrationForm, WeightForm, HeightForm, 
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from .models import Diary
 
+from .utils.calcs import calculate_total_bju
+
 
 @login_required
 def index(request):
     products = None
     message = None
+    enriched_products = None
+    total_bju = None
     if request.method == 'POST':
         form = DateForm(request.POST)
         if form.is_valid():
@@ -37,18 +41,7 @@ def index(request):
                      })
                     
                 # расчет total bju
-                total_bju = {
-                    'fats': 0,
-                    'carbos': 0,
-                    'prots': 0,
-                    'calories': 0,
-                }
-
-                for entry in enriched_products:
-                    total_bju['fats'] += entry['fats']
-                    total_bju['carbos'] += entry['carbos']
-                    total_bju['prots'] += entry['prots']
-                    total_bju['calories'] += entry['calories']
+                total_bju = calculate_total_bju(enriched_products)
                     
             except Diary.DoesNotExist:
                 message = "Дневник пуст! Добавьте продукты кнопкой +"
