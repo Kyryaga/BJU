@@ -11,73 +11,108 @@ from .utils.calcs import calculate_total_bju, calculate_each_product_bju, calc_r
 from datetime import date, datetime
 from babel.dates import format_date
 
+import csv
+
 import openpyxl
 from openpyxl.styles import Font, Alignment
 
 @login_required
-def export_diaries_to_xlsx(request):
-    # Создаем Excel-книгу и активный лист
-    wb = openpyxl.Workbook()
-    ws = wb.active
-    ws.title = "Дневники"
-    
-    # Устанавливаем шапку
-    headers = ["Дата", "Калории (ккал)", "Жиры (г)", "Белки (г)", "Углеводы (г)"]
-    ws.append(headers)
-    
-    # Формат заголовка
-    header_font = Font(bold=True)
-    for col in range(1, len(headers) + 1):
-        ws.cell(row=1, column=col).font = header_font
-        ws.cell(row=1, column=col).alignment = Alignment(horizontal="center")
-    
-    # Получаем дневники текущего пользователя
+def export_selection(request):
     diaries = Diary.objects.filter(user=request.user).order_by("date")
-    
-    row = 2  # Начальная строка для данных
-    
-    for diary in diaries:
-        # Считаем тотальные показатели для текущей даты
-        products = diary.product_entries.all()
-        total_calories = sum(entry.product.calories * entry.weight / 100 for entry in products)
-        total_fats = sum(entry.product.fats * entry.weight / 100 for entry in products)
-        total_proteins = sum(entry.product.prots * entry.weight / 100 for entry in products)
-        total_carbos = sum(entry.product.carbos * entry.weight / 100 for entry in products)
-        
-        # Добавляем строку с общей информацией по дате
-        ws.append([
-            diary.date.strftime("%d.%m.%Y"),  # Дата в формате ДД.ММ.ГГГГ
-            round(total_calories, 2),
-            round(total_fats, 2),
-            round(total_proteins, 2),
-            round(total_carbos, 2)
-        ])
-        
-        # Форматируем строку с общей информацией
-        for col in range(1, len(headers) + 1):
-            ws.cell(row=row, column=col).font = Font(bold=True)
-            ws.cell(row=row, column=col).alignment = Alignment(horizontal="center")
-        
-        row += 1  # Переход на следующую строку
-        
-        # Добавляем данные по каждому продукту
-        for entry in products:
+    context = {"diaries": diaries}
+    return render(request, "diary/export_selection.html", context)
+
+@login_required
+def export_diaries_to_file(request):
+    selected_date = request.GET.get("date")
+    export_format = request.GET.get("format")
+
+    if selected_date == "all":
+        diaries = Diary.objects.filter(user=request.user).order_by("date")
+    else:
+        try:
+            selected_date = date.fromisoformat(selected_date)
+        except ValueError:
+            selected_date = datetime.strptime(selected_date, "%b. %d, %Y").date()
+
+        diaries = Diary.objects.filter(user=request.user, date=selected_date)
+
+    if export_format == "xlsx":
+        # Экспорт в XLSX
+        wb = openpyxl.Workbook()
+        ws = wb.active
+        ws.title = "Дневники"
+
+        headers = ["Дата", "Калории (ккал)", "Жиры (г)", "Белки (г)", "Углеводы (г)", "Вес (г)"]
+        ws.append(headers)
+
+        for diary in diaries:
+            products = diary.product_entries.all()
+            total_calories = sum(entry.product.calories * entry.weight / 100 for entry in products)
+            total_fats = sum(entry.product.fats * entry.weight / 100 for entry in products)
+            total_proteins = sum(entry.product.prots * entry.weight / 100 for entry in products)
+            total_carbos = sum(entry.product.carbos * entry.weight / 100 for entry in products)
+
             ws.append([
-                entry.product.name,
-                round(entry.product.calories * entry.weight / 100, 2),
-                round(entry.product.fats * entry.weight / 100, 2),
-                round(entry.product.prots * entry.weight / 100, 2),
-                round(entry.product.carbos * entry.weight / 100, 2)
+                diary.date.strftime("%d.%m.%Y"),
+                round(total_calories, 2),
+                round(total_fats, 2),
+                round(total_proteins, 2),
+                round(total_carbos, 2)
             ])
-            row += 1
-        
-        
-    
-    # Сохраняем файл и возвращаем его пользователю
-    response = HttpResponse(content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-    response["Content-Disposition"] = f"attachment; filename=diaries_{datetime.now().strftime('%Y%m%d%H%M%S')}.xlsx"
-    wb.save(response)
-    return response
+
+            for entry in products:
+                ws.append([
+                    entry.product.name,
+                    round(entry.product.calories * entry.weight / 100, 2),
+                    round(entry.product.fats * entry.weight / 100, 2),
+                    round(entry.product.prots * entry.weight / 100, 2),
+                    round(entry.product.carbos * entry.weight / 100, 2),
+                    entry.weight,
+                ])
+
+        response = HttpResponse(content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+        response["Content-Disposition"] = f"attachment; filename=diaries_{selected_date}.xlsx"
+        wb.save(response)
+        return response
+
+    elif export_format == "csv":
+        # Экспорт в CSV
+        response = HttpResponse(content_type="text/csv")
+        response["Content-Disposition"] = f"attachment; filename=diaries_{selected_date}.csv"
+
+        writer = csv.writer(response)
+        writer.writerow(["Дата", "Калории (ккал)", "Жиры (г)", "Белки (г)", "Углеводы (г)", "Вес (г)"])
+
+        for diary in diaries:
+            products = diary.product_entries.all()
+            total_calories = sum(entry.product.calories * entry.weight / 100 for entry in products)
+            total_fats = sum(entry.product.fats * entry.weight / 100 for entry in products)
+            total_proteins = sum(entry.product.prots * entry.weight / 100 for entry in products)
+            total_carbos = sum(entry.product.carbos * entry.weight / 100 for entry in products)
+
+            writer.writerow([
+                diary.date.strftime("%d.%m.%Y"),
+                round(total_calories, 2),
+                round(total_fats, 2),
+                round(total_proteins, 2),
+                round(total_carbos, 2)
+            ])
+
+            for entry in products:
+                writer.writerow([
+                    entry.product.name,
+                    round(entry.product.calories * entry.weight / 100, 2),
+                    round(entry.product.fats * entry.weight / 100, 2),
+                    round(entry.product.prots * entry.weight / 100, 2),
+                    round(entry.product.carbos * entry.weight / 100, 2),
+                    entry.weight,
+                ])
+
+        return response
+
+    else:
+        return HttpResponse("Неверный формат", status=400)
 
 
 

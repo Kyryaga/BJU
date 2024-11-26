@@ -1,0 +1,33 @@
+.export-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.export-btn {
+  background-color: #499e63;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.export-btn:hover {
+  background-color: #61ac82;
+}
+
+label {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+select {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}

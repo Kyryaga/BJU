@@ -103,7 +103,7 @@
           <div class="avg-cal">
             Среднее значение ккал в день: {{ avg_calories|floatformat:0 }}
           </div>
-          <a href="{% url 'diary:export_diaries' %}">
+          <a href="{% url 'diary:export_selection' %}">
             <div class="export">
               <div class="export-img">
                 <img src="{% static 'images/export.png' %}" alt="" />
