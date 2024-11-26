@@ -118,12 +118,24 @@ def profile(request):
     else:
         profile_form = UserProfileForm(instance=request.user)
 
+    # Счётчик дней, где достигнута или превышена цель калорий
+    calorie_goal_days = 0
+
+    for diary in request.user.diaries.all():
+        total_calories = sum(
+            entry.product.calories * entry.weight / 100 for entry in diary.product_entries.all()
+        )
+        if total_calories >= request.user.calorie_goal:
+            calorie_goal_days += 1
+
     context = {
         'profile_form': profile_form,
         'username': request.user.username,
         'email': request.user.email,
         'age': request.user.age,
         'rsk': request.user.rsk,
+        'days_filled': request.user.diaries.count(),
+        'goal_riched_days': calorie_goal_days,
     }
     return render(request, 'diary/profile.html', context)
 

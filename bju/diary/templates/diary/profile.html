@@ -94,8 +94,10 @@
 
       <div class="other-container">
         <div class="stat-first-row">
-          <div class="stat-days-pass">Заполнено дней: 30</div>
-          <div class="stat-goal-pass">Цель достигнута: 30</div>
+          <div class="stat-days-pass">Заполнено дней: {{ days_filled }}</div>
+          <div class="stat-goal-pass">
+            Цель достигнута: {{ goal_riched_days }}
+          </div>
         </div>
         <div class="stat-second-row">
           <div class="avg-cal">Среднее значение ккал в день: 2942</div>
