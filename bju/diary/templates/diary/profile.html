@@ -100,7 +100,9 @@
           </div>
         </div>
         <div class="stat-second-row">
-          <div class="avg-cal">Среднее значение ккал в день: 2942</div>
+          <div class="avg-cal">
+            Среднее значение ккал в день: {{ avg_calories|floatformat:0 }}
+          </div>
           <a href="#">
             <div class="export">
               <div class="export-img">

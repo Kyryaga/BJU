@@ -128,6 +128,18 @@ def profile(request):
         if total_calories >= request.user.calorie_goal:
             calorie_goal_days += 1
 
+    # Счетчик средних калорий в день
+    total_calories_by_day = 0
+    for diary in request.user.diaries.all():
+        total_calories_by_day += sum(
+            entry.product.calories * entry.weight / 100 for entry in diary.product_entries.all()
+        )
+
+    try:
+        avg_calories = total_calories_by_day / request.user.diaries.count()
+    except ZeroDivisionError:
+        avg_calories = 0
+
     context = {
         'profile_form': profile_form,
         'username': request.user.username,
@@ -136,6 +148,7 @@ def profile(request):
         'rsk': request.user.rsk,
         'days_filled': request.user.diaries.count(),
         'goal_riched_days': calorie_goal_days,
+        'avg_calories': avg_calories,
     }
     return render(request, 'diary/profile.html', context)
 
