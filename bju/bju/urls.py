@@ -21,7 +21,7 @@ from django.views.generic import RedirectView
 from diary.views import login
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls, name='admin'),
     path('diary/', include('diary.urls')),
     path('', RedirectView.as_view(url='/diary/', permanent=True)), 
 ]

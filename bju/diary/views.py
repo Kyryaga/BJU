@@ -18,6 +18,11 @@ def index(request):
     message = None
     enriched_products = None
     total_bju = None
+    is_admin = None
+
+    # Админ ли пользователь
+    if request.user.is_superuser:
+        is_admin = True
 
     if request.method == 'POST':
         form = DateForm(request.POST)
@@ -70,6 +75,7 @@ def index(request):
         'message': message,
         'total_bju': total_bju,
         'date': date_display,
+        'is_admin': is_admin,
     }
     return render(request, 'diary/diary.html', context)
 

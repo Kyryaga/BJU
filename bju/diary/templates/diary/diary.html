@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="{% static 'css/general.css' %}" />
     <link rel="stylesheet" href="{% static 'css/header.css' %}" />
     <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+    {% if is_admin %}
+    <link rel="stylesheet" href="{% static 'css/header_admin.css' %}" />
+    {% endif %}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -37,6 +40,15 @@
         <div class="page-header-title">Дневник</div>
         <div class="page-header-subtitle">{{ date }}</div>
       </div>
+      {% if is_admin %}
+      <div class="admin-btn-box">
+        <button class="admin-btn">
+          <a href="/admin/"
+            ><img src="{% static 'images/admin.png' %}" alt=""
+          /></a>
+        </button>
+      </div>
+      {% endif%}
       <div class="diary-btn-box">
         <button class="diary-btn">
           <a href="{% url 'diary:index' %}"

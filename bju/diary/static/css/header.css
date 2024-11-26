@@ -22,6 +22,10 @@
   width: 150px;
 }
 
+.admin-btn-box {
+  width: 150px;
+}
+
 .page-header-box {
   flex: 1;
   text-align: center;
@@ -54,7 +58,8 @@
 }
 
 .diary-btn,
-.profile-btn {
+.profile-btn,
+.admin-btn {
   border: none;
   border-radius: 10px;
   background-color: rgb(238, 238, 238);
@@ -64,13 +69,19 @@
 }
 
 .diary-btn:hover,
-.profile-btn:hover {
+.profile-btn:hover,
+.admin-btn:hover {
   background-color: #f0f0f0; /* Лёгкий серый фон при наведении */
   box-shadow: 5px 5px 5px rgba(70, 70, 70, 0.5); /* Усиление тени */
   transform: scale(1.05); /* Лёгкое увеличение кнопки */
 }
 
 .diary-btn:active,
-.profile-btn:active {
+.profile-btn:active,
+.admin-btn:active {
   opacity: 0.5;
+}
+
+.admin-btn {
+  background-color: #f17e40;
 }
