@@ -6,7 +6,7 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):  
     weight = models.FloatField() 
     height = models.FloatField()
-    calorie_goal = models.IntegerField(null=True, blank=True)
+    calorie_goal = models.IntegerField()
     age = models.IntegerField()
 
     def __str__(self):

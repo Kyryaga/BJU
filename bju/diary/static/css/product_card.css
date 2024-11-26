@@ -1,0 +1,27 @@
+.weight-input {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.return-to-add-page {
+  margin-bottom: 25px;
+  text-decoration: none;
+  color: inherit;
+  background-color: #f17e40;
+  padding: 10px 40px;
+
+  border-radius: 10px;
+
+  color: white;
+  font-weight: 500;
+
+  transition: all 0.3s ease;
+}
+
+.return-to-add-page:hover {
+  opacity: 0.8;
+}
+
+.return-to-add-page:active {
+  opacity: 0.6;
+}

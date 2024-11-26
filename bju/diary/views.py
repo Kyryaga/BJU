@@ -246,10 +246,17 @@ def product_card(request, product_id):
     else:
         form = ProductWeightForm()
 
+    # Отображение даты
+    if date_selected == date.today():
+        date_display = 'Сегодня'
+    else:
+        date_display = format_date(date_selected, format="d MMMM yyyy", locale="ru")
+
     context = {
         'product': product,
         'date': date_selected,
         'form': form,
+        'date_display': date_display,
     }
 
     return render(request, 'diary/product_card.html', context)

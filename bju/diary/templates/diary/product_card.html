@@ -1,22 +1,148 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Product Card</title>
+    <link rel="stylesheet" href="{% static 'css/general.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/header.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/edit_main.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/product_card.css' %}" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <p>Карта продукта {{ product.name }} для даты {{ date }}</p>
+    <div class="header">
+      <div class="profile-btn-box">
+        <button class="profile-btn">
+          <a href="{% url 'diary:profile' %}"
+            ><img src="{% static 'images/account_box.png' %}" alt=""
+          /></a>
+        </button>
+      </div>
+      <div class="page-header-box">
+        <div class="page-header-title">Добавить</div>
+        <div class="page-header-subtitle">{{ date_display }}</div>
+      </div>
+      <div class="diary-btn-box">
+        <button class="diary-btn">
+          <a href="{% url 'diary:index' %}"
+            ><img src="{% static 'images/diary.png' %}" alt=""
+          /></a>
+        </button>
+      </div>
+    </div>
 
-    <p>Добавить в дневник</p>
+    <div class="main">
+      <div class="edit-title-container">{{ product.name }}</div>
 
-    <form method="post" action="">
-      {% csrf_token %} {{ form.as_p }}
-      <button type="submit">Добавить</button>
-    </form>
+      <div class="edit-product-container">
+        <div class="edit-container">
+          <p class="edit-container-text">Добавить в дневник</p>
+          <form method="post" class="edit-form">
+            {% csrf_token %}
+            <div class="weight-input-row">
+              <img
+                src="{% static 'images/weight-logo.png' %}"
+                alt="Weight Icon"
+                class="weight-icon"
+              />
+              {{ form }}
+              <span>, г</span>
+            </div>
+            <div class="form-buttons">
+              <button
+                type="submit"
+                name="save"
+                class="btn btn-save"
+                style="width: 360px"
+              >
+                Сохранить
+              </button>
+            </div>
+          </form>
 
-    <a href="{% url 'diary:add_product' %}?date={{ date }}"
-      >Назад к продуктам</a
-    >
+          <div class="current-bju-container">
+            <div class="first-row">
+              <div class="calories-block">
+                <p class="title">Калории</p>
+                <p class="value">{{ product.calories }}</p>
+              </div>
+              <div class="fats-block">
+                <p class="title">Жиры</p>
+                <p class="value">{{ product.fats }}г</p>
+              </div>
+            </div>
+            <div class="second-row">
+              <div class="carbos-block">
+                <p class="title">Углев</p>
+                <p class="value">{{ product.carbos }}г</p>
+              </div>
+              <div class="prots-block">
+                <p class="title">Белок</p>
+                <p class="value">{{ product.prots }}г</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="return-to-add-page" href="{% url 'diary:add_product' %}?date={{ date }}"
+        >Назад к продуктам</a
+      >
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Исходные значения БЖУ для 100 г
+        const baseBJU = {
+          calories: parseFloat("{{ product.calories }}"), // Калории
+          fats: parseFloat("{{ product.fats }}"), // Жиры
+          carbos: parseFloat("{{ product.carbos }}"), // Углеводы
+          prots: parseFloat("{{ product.prots }}"), // Белки
+        };
+
+        // Элементы для ввода веса и отображения БЖУ
+        const weightInput = document.querySelector('input[name="weight"]');
+        const caloriesBlock = document.querySelector(".calories-block .value");
+        const fatsBlock = document.querySelector(".fats-block .value");
+        const carbosBlock = document.querySelector(".carbos-block .value");
+        const protsBlock = document.querySelector(".prots-block .value");
+
+        // Функция обновления БЖУ
+        function updateBJU(weight) {
+          const factor = weight / 100; // Расчёт коэффициента для веса
+
+          // Пересчитываем значения БЖУ
+          const updatedBJU = {
+            calories: (baseBJU.calories * factor).toFixed(0),
+            fats: (baseBJU.fats * factor).toFixed(1),
+            carbos: (baseBJU.carbos * factor).toFixed(1),
+            prots: (baseBJU.prots * factor).toFixed(1),
+          };
+
+          // Обновляем значения в DOM
+          caloriesBlock.textContent = `${updatedBJU.calories}`;
+          fatsBlock.textContent = `${updatedBJU.fats}г`;
+          carbosBlock.textContent = `${updatedBJU.carbos}г`;
+          protsBlock.textContent = `${updatedBJU.prots}г`;
+        }
+
+        // Добавляем обработчик события на поле ввода веса
+        weightInput.addEventListener("input", function () {
+          const weight = parseFloat(weightInput.value) || 0; // Получаем вес или 0, если поле пустое
+          updateBJU(weight);
+        });
+
+        // Инициализация значений при загрузке
+        const initialWeight = parseFloat(weightInput.value) || 0;
+        updateBJU(initialWeight);
+      });
+    </script>
   </body>
 </html>

@@ -40,7 +40,7 @@ class DateForm(forms.Form):
 class ProductWeightForm(forms.Form):
     weight = forms.FloatField(
         min_value=1,  
-        label="Вес продукта (г)",
+        label="",
         widget=forms.NumberInput(attrs={
             'placeholder': 'Введите вес в граммах',
             'class': 'weight-input',
