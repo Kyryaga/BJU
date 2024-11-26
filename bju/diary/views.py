@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from .forms import UserLoginForm, UserRegistrationForm, UserProfileForm, DateForm
+from .forms import UserLoginForm, UserRegistrationForm, UserProfileForm, DateForm, ProductWeightForm
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from .models import Diary, ProductsDiaries, Product
 
@@ -195,33 +195,54 @@ def add_product(request):
             print("НЕКОРЕКТНАЯ ДАТА: ", date_selected)
             return redirect('diary:index')  # Вернуться на страницу дневника, если дата некорректна
 
-    # Проверяем, существует ли дневник для выбранной даты
     diary, created = Diary.objects.get_or_create(user=request.user, date=date_selected)
 
-    if request.method == 'POST':
-        product_id = request.POST.get('product_id')
-        weight = request.POST.get('weight')
-
-        if product_id and weight:
-            product = get_object_or_404(Product, id=product_id)
-            ProductsDiaries.objects.create(
-                diary=diary,
-                product=product,
-                weight=weight
-            )
-            # После добавления продукта перенаправляем обратно в дневник
-            return redirect(f"{reverse('diary:index')}?date={date_selected}")
+    if 'search' in request.GET:
+        query = request.GET.get('search')
+        products = Product.objects.filter(name__icontains=query)
+    else:
+        products = Product.objects.all()
 
     # Отображение даты
     if date_selected == date.today():
         date_display = 'Сегодня'
     else:
         date_display = format_date(date_selected, format="d MMMM yyyy", locale="ru")
-  
-    products = Product.objects.all()  
+   
     context = {
         'date': date_selected,
         'products': products,
         'date_display': date_display,
     }
     return render(request, 'diary/add_product.html', context)
+
+
+@login_required
+def product_card(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+
+    date_selected = request.GET.get('date')
+    date_selected = datetime.strptime(date_selected, "%b. %d, %Y").date()
+
+    if request.method == 'POST':
+        diary = request.user.diaries.get(date=date_selected)
+        form = ProductWeightForm(request.POST)
+        if form.is_valid():
+            weight = form.cleaned_data['weight']
+            ProductsDiaries.objects.create(
+                diary = diary,
+                product=product,
+                weight=weight
+            )
+
+            return redirect(f"{reverse('diary:index')}?date={date_selected}")
+    else:
+        form = ProductWeightForm()
+
+    context = {
+        'product': product,
+        'date': date_selected,
+        'form': form,
+    }
+
+    return render(request, 'diary/product_card.html', context)

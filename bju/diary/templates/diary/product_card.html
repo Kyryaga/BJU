@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Card</title>
+  </head>
+  <body>
+    <p>Карта продукта {{ product.name }} для даты {{ date }}</p>
+
+    <p>Добавить в дневник</p>
+
+    <form method="post" action="">
+      {% csrf_token %} {{ form.as_p }}
+      <button type="submit">Добавить</button>
+    </form>
+
+    <a href="{% url 'diary:add_product' %}?date={{ date }}"
+      >Назад к продуктам</a
+    >
+  </body>
+</html>

@@ -39,22 +39,19 @@
 
     <h2>Добавить продукт для {{ date_display }}</h2>
 
-    <form method="post">
-      {% csrf_token %}
-      <label for="product">Выберите продукт:</label>
-      <select name="product_id" id="product" required>
-        {% for product in products %}
-        <option value="{{ product.id }}">
-          {{ product.name }} ({{ product.calories }} ккал)
-        </option>
-        {% endfor %}
-      </select>
-
-      <label for="weight">Вес (г):</label>
-      <input type="number" name="weight" id="weight" min="1" required />
-
-      <button type="submit">Добавить</button>
+    <form action="{% url 'diary:add_product' %}">
+      <input type="hidden" name="date" value="{{ date }}" />
+      <input type="search" name="search" placeholder="Search" />
+      <button type="submit">Найти</button>
     </form>
+
+    {% for product in products %}
+
+    <a href="{% url 'diary:product_card' product.id %}?date={{ date }}">
+      <p>{{ product.name }}</p>
+    </a>
+
+    {% endfor %}
 
     <a href="{% url 'diary:index' %}?date={{ date }}">Назад в дневник</a>
   </body>
