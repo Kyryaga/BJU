@@ -27,11 +27,12 @@ def index(request):
             return redirect(f"{reverse('diary:index')}?date={date_selected}")
     else:
         date_selected = request.GET.get('date')
+        print(date_selected)
         if date_selected:
             try:
                 date_selected = date.fromisoformat(date_selected)
             except ValueError:
-                date_selected = date.today() 
+                date_selected = datetime.strptime(date_selected, "%b. %d, %Y").date()
         else:
             date_selected = date.today() 
         form = DateForm(initial={'date': date_selected})
