@@ -87,7 +87,9 @@
         {% endif %}
 
         <div class="products-print-block">
-          <div class="add-product-container">+</div>
+          <div class="add-product-container">
+            <a href="#"><img src="{% static 'images/add.png' %}" alt="" /></a>
+          </div>
           <!-- Отображение продуктов -->
           {% if products %} {% for entry in products %}
           <a

@@ -115,7 +115,7 @@
   flex-direction: column;
 
   align-items: center;
-  padding-top: 15px;
+  padding-top: 10px;
 
   padding-bottom: 30px;
 }
@@ -297,4 +297,22 @@
 
 .calories-row span {
   font-weight: bold;
+}
+
+.add-product-container img {
+  transform: translateX(20px);
+
+  transition: all 0.1s ease;
+}
+
+.add-product-container {
+  padding-bottom: 7px;
+}
+
+.add-product-container img:hover {
+  background-color: #efefef;
+}
+
+.add-product-container img:active {
+  opacity: 0.5;
 }
