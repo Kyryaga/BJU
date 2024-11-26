@@ -4,6 +4,7 @@ def calculate_total_bju(enriched_products):
         'carbos': 0,
         'prots': 0,
         'calories': 0,
+        'rsk': 0,
     }
     
     for entry in enriched_products:
@@ -11,6 +12,7 @@ def calculate_total_bju(enriched_products):
         total_bju['carbos'] += entry['carbos']
         total_bju['prots'] += entry['prots']
         total_bju['calories'] += entry['calories']
+        total_bju['rsk'] += entry['rsk']
 
     return total_bju
 
