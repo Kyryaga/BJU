@@ -280,7 +280,8 @@
 .total-carbos,
 .total-prots,
 .total-fats,
-.total-rsk {
+.total-rsk,
+.goal-value {
   font-size: 12px;
   color: rgb(62, 62, 62);
   text-align: center;

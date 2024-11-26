@@ -1,10 +1,11 @@
-def calculate_total_bju(enriched_products):
+def calculate_total_bju(enriched_products, calories_goal):
     total_bju = {
         'fats': 0,
         'carbos': 0,
         'prots': 0,
         'calories': 0,
         'rsk': 0,
+        'goal': 0,
     }
     
     for entry in enriched_products:
@@ -13,6 +14,9 @@ def calculate_total_bju(enriched_products):
         total_bju['prots'] += entry['prots']
         total_bju['calories'] += entry['calories']
         total_bju['rsk'] += entry['rsk']
+    
+    # расчет цели
+    total_bju['goal'] = total_bju['calories'] / calories_goal * 100
 
     return total_bju
 

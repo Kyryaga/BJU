@@ -47,7 +47,7 @@ def index(request):
         calc_rsk(enriched_products, request.user.rsk)
 
         # расчет total bju
-        total_bju = calculate_total_bju(enriched_products)
+        total_bju = calculate_total_bju(enriched_products, request.user.calorie_goal)
 
     except Diary.DoesNotExist:
         message = "Дневник пуст! Добавьте продукты кнопкой +"
