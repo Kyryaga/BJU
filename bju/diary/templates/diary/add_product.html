@@ -50,23 +50,32 @@
         <button type="submit">Найти</button>
       </form>
 
-      {% for product in products %}
-      <a
-        href="{% url 'diary:product_card' product.id %}?date={{ date }}"
-        class="products-container"
-      >
-        <div class="first-col">
-          <p class="product-name">{{ product.name }}</p>
-          <p class="product-calories">{{ product.calories }} ккал</p>
-        </div>
-        <div class="second-col">
-          <img src="{% static 'images/edit_product.png' %}" alt="" />
-        </div>
+      {% if msg %}
+      <p class="not-found-msg">{{ msg }}</p>
+      {% endif %} {% if products %}
 
+      <!-- Прокручиваемый контейнер для продуктов -->
+      <div class="scrollable-products-container">
+        {% for product in products|slice:":15" %}
+        <a
+          href="{% url 'diary:product_card' product.id %}?date={{ date }}"
+          class="products-container"
+        >
+          <div class="first-col">
+            <p class="product-name">{{ product.name }}</p>
+            <p class="product-calories">{{ product.calories }} ккал</p>
+          </div>
+          <div class="second-col">
+            <img src="{% static 'images/edit_product.png' %}" alt="" />
+          </div>
+        </a>
         {% endfor %}
-      </a>
+      </div>
+      {% endif %}
 
-      <a href="{% url 'diary:index' %}?date={{ date }}">Назад в дневник</a>
+      <a class="return-to-diary" href="{% url 'diary:index' %}?date={{ date }}"
+        >Назад в дневник</a
+      >
     </div>
   </body>
 </html>

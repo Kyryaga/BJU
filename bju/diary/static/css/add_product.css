@@ -11,7 +11,7 @@ p {
 .main {
   margin-top: 20px;
   width: 500px;
-  height: 600px;
+  height: auto;
   background-color: white;
 
   border-radius: 10px;
@@ -29,11 +29,6 @@ p {
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  padding-bottom: 20px;
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
-  border-bottom-color: rgb(208, 208, 208);
 }
 
 .inpt {
@@ -124,4 +119,48 @@ p {
 
 .products-container .second-col img {
   transform: translateX(30px);
+}
+
+.scrollable-products-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  max-height: 400px;
+  overflow-y: auto;
+
+  padding: 10px;
+  margin-top: 20px;
+
+  margin-bottom: 20px;
+}
+
+.return-to-diary {
+  text-decoration: none;
+  color: inherit;
+  background-color: #f17e40;
+  padding: 10px 40px;
+
+  border-radius: 10px;
+
+  color: white;
+  font-weight: 500;
+
+  transition: all 0.3s ease;
+}
+
+.return-to-diary:hover {
+  opacity: 0.8;
+}
+
+.return-to-diary:active {
+  opacity: 0.6;
+}
+
+.not-found-msg {
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 20px;
 }

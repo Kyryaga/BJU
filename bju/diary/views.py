@@ -186,6 +186,7 @@ def product_edit(request, entry_id):
 @login_required
 def add_product(request):
     date_selected = request.GET.get('date')
+    not_found_msg = None
     
     if not date_selected:
         date_selected = date.today()
@@ -201,10 +202,12 @@ def add_product(request):
     if 'search' in request.GET:
         query = request.GET.get('search')
         print(f"Поисковый запрос: {query}")
-        products = Product.objects.filter(name__icontains=query)
-        
+        products = Product.objects.filter(name__icontains=query)[:15]
+
+        if products.count() == 0:
+            not_found_msg = 'Ничего не найдено'        
     else:
-        products = Product.objects.all()
+        products = Product.objects.all()[:15]
 
     # Отображение даты
     if date_selected == date.today():
@@ -216,6 +219,7 @@ def add_product(request):
         'date': date_selected,
         'products': products,
         'date_display': date_display,
+        'msg': not_found_msg,
     }
     return render(request, 'diary/add_product.html', context)
 
