@@ -114,38 +114,5 @@
         </div>
       </div>
     </div>
-
-    <!-- Модальное окно -->
-    <div id="exportModal" class="modal">
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Выберите даты для экспорта</h2>
-        <form action="{% url 'diary:export_diaries' %}" method="get">
-          <label for="date">Выберите дату:</label>
-          <select name="date" id="date">
-            <option value="all">Все даты</option>
-            {% for diary in diaries %}
-            <option value="{{ diary.date }}">
-              {{ diary.date|date:"d.m.Y" }}
-            </option>
-            {% endfor %}
-          </select>
-          <button type="submit" class="modal-submit-btn">Экспортировать</button>
-        </form>
-      </div>
-    </div>
-
-    <!-- Кнопка открытия модального окна -->
-    <div class="stat-second-row">
-      <div class="avg-cal">
-        Среднее значение ккал в день: {{ avg_calories|floatformat:0 }}
-      </div>
-      <button id="exportBtn" class="export">
-        <div class="export-img">
-          <img src="{% static 'images/export.png' %}" alt="" />
-        </div>
-        <div class="export-alt">Export</div>
-      </button>
-    </div>
   </body>
 </html>
