@@ -212,10 +212,16 @@ def add_product(request):
             # После добавления продукта перенаправляем обратно в дневник
             return redirect(f"{reverse('diary:index')}?date={date_selected}")
 
-    # Передаём дату и список продуктов в контекст
-    products = Product.objects.all()  # Все доступные продукты
+    # Отображение даты
+    if date_selected == date.today():
+        date_display = 'Сегодня'
+    else:
+        date_display = format_date(date_selected, format="d MMMM yyyy", locale="ru")
+  
+    products = Product.objects.all()  
     context = {
         'date': date_selected,
         'products': products,
+        'date_display': date_display,
     }
     return render(request, 'diary/add_product.html', context)

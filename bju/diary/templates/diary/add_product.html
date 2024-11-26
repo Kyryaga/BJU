@@ -26,7 +26,7 @@
       </div>
       <div class="page-header-box">
         <div class="page-header-title">Добавить</div>
-        <div class="page-header-subtitle">{{ date }}</div>
+        <div class="page-header-subtitle">{{ date_display }}</div>
       </div>
       <div class="diary-btn-box">
         <button class="diary-btn">
@@ -37,7 +37,7 @@
       </div>
     </div>
 
-    <h2>Добавить продукт для {{ date }}</h2>
+    <h2>Добавить продукт для {{ date_display }}</h2>
 
     <form method="post">
       {% csrf_token %}
