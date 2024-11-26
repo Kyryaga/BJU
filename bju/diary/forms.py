@@ -7,11 +7,16 @@ class UserLoginForm(AuthenticationForm):
     class Meta:
         model = User 
         fields = ('username', 'password')
+        widgets = {
+            'username': forms.NumberInput(attrs={'class': 'form-control'}),
+            'password': forms.NumberInput(attrs={'class': 'form-control'}),
+        }
 
 class UserRegistrationForm(UserCreationForm):
     class Meta:
         model = User 
         fields = ('username', 'first_name', 'email', 'password1', 'password2', 'weight', 'height', 'calorie_goal')
+        
 
 class UserProfileForm(forms.ModelForm):
     class Meta:
