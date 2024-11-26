@@ -118,6 +118,7 @@ def profile(request):
         'username': request.user.username,
         'email': request.user.email,
         'age': request.user.age,
+        'rsk': request.user.rsk,
     }
     return render(request, 'diary/profile.html', context)
 

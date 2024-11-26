@@ -167,8 +167,10 @@ body {
 }
 
 .avg-cal {
-  font-size: 13px;
+  font-size: 15px;
   width: 139px;
+  text-align: center;
+  align-content: center;
 }
 
 .export {
