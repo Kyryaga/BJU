@@ -15,7 +15,18 @@ class UserLoginForm(AuthenticationForm):
 class UserRegistrationForm(UserCreationForm):
     class Meta:
         model = User 
-        fields = ('username', 'first_name', 'email', 'password1', 'password2', 'weight', 'height', 'calorie_goal')
+        fields = ('username', 'first_name', 'email', 'password1', 'password2', 'weight', 'height', 'calorie_goal', 'age')
+        labels = {
+            'username': 'Имя пользователя',
+            'first_name': 'Имя',
+            'email': 'Электронная почта',
+            'password1': 'Пароль',
+            'password2': 'Подтвердите пароль',
+            'weight': 'Вес',
+            'height': 'Рост',
+            'calorie_goal': 'Цель по калориям',
+            'age': 'Возраст',
+        }
         
 
 class UserProfileForm(forms.ModelForm):

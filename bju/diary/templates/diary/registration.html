@@ -1,14 +1,94 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>REGISTRATION</title>
+    <link rel="stylesheet" href="{% static 'css/general.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/header.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/login.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/reg.css' %}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <form action="{% url 'diary:registration' %}" method="post">
-      {% csrf_token %} {{ form.as_p }}
-      <input type="submit" , value="Send" />
-    </form>
+    <div class="header">
+      <div class="profile-btn-box">
+        <img
+          class="main-logo"
+          src="{% static 'images/main-logo.png' %}"
+          alt=""
+        />
+      </div>
+      <div class="page-header-box">
+        <div class="page-header-title">Регистрация</div>
+        <div class="page-header-subtitle">{{ date }}</div>
+      </div>
+      <div class="diary-btn-box">
+        <button class="diary-btn">
+          <a href="{% url 'diary:index' %}"
+            ><img src="{% static 'images/diary.png' %}" alt=""
+          /></a>
+        </button>
+      </div>
+    </div>
+
+    <div class="main">
+      <div class="main-header">Регистрация</div>
+
+      <div class="profile-forms-container">
+        <form method="post" class="profile-form">
+          {% csrf_token %}
+
+          <!-- Общие ошибки формы -->
+          {% if form.non_field_errors %}
+          <div class="form-errors">
+            <ul>
+              {% for error in form.non_field_errors %}
+              <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+
+          <!-- Поля формы -->
+          {% for field in form %}
+          <div class="profile-form-group">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }} {% if field.errors %}
+            <div class="field-errors">
+              <ul>
+                {% for error in field.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+            {% endif %}
+          </div>
+          {% endfor %}
+
+          <button type="submit" class="profile-save-btn">
+            Зарегистрироваться
+          </button>
+        </form>
+      </div>
+
+      <div class="main-footer">
+        <p>
+          Уже есть аккаунт?
+          <a href="{% url 'diary:login' %}">Войти</a>
+        </p>
+      </div>
+    </div>
+
+    <!--<form action="{% url 'diary:registration' %}" method="post">
+  {% csrf_token %} {{ form.as_p }}
+  <input type="submit" , value="Send" />
+</form>-->
   </body>
 </html>
