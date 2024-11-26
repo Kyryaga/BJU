@@ -29,3 +29,7 @@ def calculate_each_product_bju(products):
         })
 
     return enriched_products
+
+def calc_rsk(enriched_products, rsk):
+    for product_entry in enriched_products:
+        product_entry['rsk'] = product_entry['calories'] / rsk * 100

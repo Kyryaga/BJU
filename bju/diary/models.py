@@ -11,6 +11,11 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.username
+    
+    @property
+    def rsk(self):
+        bmr = 88.36 + (13.4 * self.weight) + (4.8 * self.height) - (5.7 * self.age)
+        return bmr * 1.5
 
 
 class Product(models.Model):

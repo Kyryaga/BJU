@@ -7,7 +7,7 @@ from .forms import UserLoginForm, UserRegistrationForm, UserProfileForm, DateFor
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from .models import Diary, ProductsDiaries
 
-from .utils.calcs import calculate_total_bju, calculate_each_product_bju
+from .utils.calcs import calculate_total_bju, calculate_each_product_bju, calc_rsk
 from datetime import date
 from babel.dates import format_date
 
@@ -43,6 +43,8 @@ def index(request):
 
         # расчет bju для каждого продукта с учетом веса
         enriched_products = calculate_each_product_bju(products)
+
+        calc_rsk(enriched_products, request.user.rsk)
 
         # расчет total bju
         total_bju = calculate_total_bju(enriched_products)
