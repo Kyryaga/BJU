@@ -7,6 +7,7 @@
     <title>Add Product</title>
     <link rel="stylesheet" href="{% static 'css/general.css' %}" />
     <link rel="stylesheet" href="{% static 'css/header.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/add_product.css' %}" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -37,23 +38,35 @@
       </div>
     </div>
 
-    <h2>Добавить продукт для {{ date_display }}</h2>
+    <div class="main">
+      <form action="{% url 'diary:add_product' %}">
+        <input type="hidden" name="date" value="{{ date }}" />
+        <input
+          class="inpt"
+          type="search"
+          name="search"
+          placeholder="Пишите здесь.."
+        />
+        <button type="submit">Найти</button>
+      </form>
 
-    <form action="{% url 'diary:add_product' %}">
-      <input type="hidden" name="date" value="{{ date }}" />
-      <input type="search" name="search" placeholder="Search" />
-      <button type="submit">Найти</button>
-    </form>
+      {% for product in products %}
+      <a
+        href="{% url 'diary:product_card' product.id %}?date={{ date }}"
+        class="products-container"
+      >
+        <div class="first-col">
+          <p class="product-name">{{ product.name }}</p>
+          <p class="product-calories">{{ product.calories }} ккал</p>
+        </div>
+        <div class="second-col">
+          <img src="{% static 'images/edit_product.png' %}" alt="" />
+        </div>
 
-    {% for product in products %}
+        {% endfor %}
+      </a>
 
-    <a href="{% url 'diary:product_card' product.id %}?date={{ date }}">
-      <p>{{ product.name }}</p>
-    </a>
-
-    {% endfor %}
-
-    <a href="{% url 'diary:index' %}?date={{ date }}">Назад в дневник</a>
+      <a href="{% url 'diary:index' %}?date={{ date }}">Назад в дневник</a>
+    </div>
   </body>
 </html>
- 

@@ -200,7 +200,9 @@ def add_product(request):
 
     if 'search' in request.GET:
         query = request.GET.get('search')
+        print(f"Поисковый запрос: {query}")
         products = Product.objects.filter(name__icontains=query)
+        
     else:
         products = Product.objects.all()
 
