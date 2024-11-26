@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Product</title>
+    <link rel="stylesheet" href="{% static 'css/general.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/header.css' %}" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="header">
+      <div class="profile-btn-box">
+        <button class="profile-btn">
+          <a href="{% url 'diary:profile' %}"
+            ><img src="{% static 'images/account_box.png' %}" alt=""
+          /></a>
+        </button>
+      </div>
+      <div class="page-header-box">
+        <div class="page-header-title">Добавить</div>
+        <div class="page-header-subtitle">{{ date }}</div>
+      </div>
+      <div class="diary-btn-box">
+        <button class="diary-btn">
+          <a href="{% url 'diary:index' %}"
+            ><img src="{% static 'images/diary.png' %}" alt=""
+          /></a>
+        </button>
+      </div>
+    </div>
+
+    <h2>Добавить продукт для {{ date }}</h2>
+
+    <form method="post">
+      {% csrf_token %}
+      <label for="product">Выберите продукт:</label>
+      <select name="product_id" id="product" required>
+        {% for product in products %}
+        <option value="{{ product.id }}">
+          {{ product.name }} ({{ product.calories }} ккал)
+        </option>
+        {% endfor %}
+      </select>
+
+      <label for="weight">Вес (г):</label>
+      <input type="number" name="weight" id="weight" min="1" required />
+
+      <button type="submit">Добавить</button>
+    </form>
+
+    <a href="{% url 'diary:index' %}?date={{ date }}">Назад в дневник</a>
+  </body>
+</html>

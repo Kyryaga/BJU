@@ -5,10 +5,10 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from .forms import UserLoginForm, UserRegistrationForm, UserProfileForm, DateForm
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
-from .models import Diary, ProductsDiaries
+from .models import Diary, ProductsDiaries, Product
 
 from .utils.calcs import calculate_total_bju, calculate_each_product_bju, calc_rsk
-from datetime import date
+from datetime import date, datetime
 from babel.dates import format_date
 
 
@@ -39,15 +39,20 @@ def index(request):
     # Проверяем, есть ли дневник на указанную дату
     try:
         diary = Diary.objects.get(user=request.user, date=date_selected)
-        products = diary.product_entries.all()  # Получаем все записи продуктов из дневника
 
-        # расчет bju для каждого продукта с учетом веса
-        enriched_products = calculate_each_product_bju(products)
+        if not diary.product_entries.exists():
+            diary.delete()
+            print(f"Удален пустой дневник за {diary.date}")
+        else: 
+            products = diary.product_entries.all()  # Получаем все записи продуктов из дневника
 
-        calc_rsk(enriched_products, request.user.rsk)
+            # расчет bju для каждого продукта с учетом веса
+            enriched_products = calculate_each_product_bju(products)
 
-        # расчет total bju
-        total_bju = calculate_total_bju(enriched_products, request.user.calorie_goal)
+            calc_rsk(enriched_products, request.user.rsk)
+
+            # расчет total bju
+            total_bju = calculate_total_bju(enriched_products, request.user.calorie_goal)
 
     except Diary.DoesNotExist:
         message = "Дневник пуст! Добавьте продукты кнопкой +"
@@ -150,3 +155,42 @@ def product_edit(request, entry_id):
                'date': display_date,
                }
     return render(request, 'diary/edit.html', context)
+
+
+@login_required
+def add_product(request):
+    date_selected = request.GET.get('date')
+    
+    if not date_selected:
+        date_selected = date.today()
+    else:
+        try:
+            date_selected = datetime.strptime(date_selected, "%b. %d, %Y").date()
+        except ValueError:
+            print("НЕКОРЕКТНАЯ ДАТА: ", date_selected)
+            return redirect('diary:index')  # Вернуться на страницу дневника, если дата некорректна
+
+    # Проверяем, существует ли дневник для выбранной даты
+    diary, created = Diary.objects.get_or_create(user=request.user, date=date_selected)
+
+    if request.method == 'POST':
+        product_id = request.POST.get('product_id')
+        weight = request.POST.get('weight')
+
+        if product_id and weight:
+            product = get_object_or_404(Product, id=product_id)
+            ProductsDiaries.objects.create(
+                diary=diary,
+                product=product,
+                weight=weight
+            )
+            # После добавления продукта перенаправляем обратно в дневник
+            return redirect(f"{reverse('diary:index')}?date={date_selected}")
+
+    # Передаём дату и список продуктов в контекст
+    products = Product.objects.all()  # Все доступные продукты
+    context = {
+        'date': date_selected,
+        'products': products,
+    }
+    return render(request, 'diary/add_product.html', context)
