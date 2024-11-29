@@ -3,11 +3,13 @@ import subprocess
 import requests
 from datetime import datetime
 
+from bju.bju.config import OAUTH_TOKEN, DB_USER, DB_NAME, YANDEX_DISK_URL
+
 # Конфигурация
-DB_NAME = "bju_2"
-DB_USER = "postgres"
-YANDEX_DISK_URL = "https://cloud-api.yandex.net/v1/disk/resources/upload"
-OAUTH_TOKEN = "y0_AgAAAAAzEB2vAAzZUQAAAAEaE4HSAAC3Ai7mlThIiIKUXx6OJfJkro-nIQ"
+DB_NAME = DB_NAME
+DB_USER = DB_USER
+YANDEX_DISK_URL = YANDEX_DISK_URL
+OAUTH_TOKEN = OAUTH_TOKEN
 
 def create_dump():
     """Создать дамп базы данных."""
