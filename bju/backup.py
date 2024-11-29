@@ -4,10 +4,10 @@ import requests
 from datetime import datetime
 
 # Конфигурация
-DB_NAME = "bju_2"
-DB_USER = "postgres"
-YANDEX_DISK_URL = "https://cloud-api.yandex.net/v1/disk/resources/upload"
-OAUTH_TOKEN = "y0_AgAAAAAzEB2vAAzZUQAAAAEaE4HSAAC3Ai7mlThIiIKUXx6OJfJkro-nIQ"
+DB_NAME = "hidden"
+DB_USER = "hidden"
+YANDEX_DISK_URL = "hidden"
+OAUTH_TOKEN = "hidden"
 
 def create_dump():
     """Создать дамп базы данных."""
