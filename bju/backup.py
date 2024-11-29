@@ -3,7 +3,9 @@ import subprocess
 import requests
 from datetime import datetime
 
+
 from bju.config import OAUTH_TOKEN, DB_USER, DB_NAME, YANDEX_DISK_URL
+
 
 # Конфигурация
 DB_NAME = DB_NAME
@@ -64,4 +66,7 @@ if __name__ == "__main__":
         # Удаление локального файла после загрузки
         if os.path.exists(backup_file):
             os.remove(backup_file)
+
             print(f"Локальный файл {backup_file} успешно удален.")
+
+
