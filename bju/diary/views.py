@@ -154,7 +154,7 @@ def index(request):
             diary.delete()
             print(f"Удален пустой дневник за {diary.date}")
         else: 
-            products = diary.product_entries.all()  # Получаем все записи продуктов из дневника
+            products = diary.product_entries.all()  
 
             # расчет bju для каждого продукта с учетом веса
             enriched_products = calculate_each_product_bju(products)
@@ -305,7 +305,7 @@ def add_product(request):
             date_selected = datetime.strptime(date_selected, "%b. %d, %Y").date()
         except ValueError:
             print("НЕКОРЕКТНАЯ ДАТА: ", date_selected)
-            return redirect('diary:index')  # Вернуться на страницу дневника, если дата некорректна
+            return redirect('diary:index')  
 
     diary, created = Diary.objects.get_or_create(user=request.user, date=date_selected)
 

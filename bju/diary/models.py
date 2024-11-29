@@ -34,6 +34,10 @@ class Diary(models.Model):
     date = models.DateField(null=False)
     products = models.ManyToManyField(Product, through="ProductsDiaries")
 
+    def __str__(self):
+        return f"Дневник {self.user}({self.date})"
+    
+
 
 # intermediate table Products-Diaries for m-m
 class ProductsDiaries(models.Model):
